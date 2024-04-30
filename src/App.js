@@ -11,12 +11,13 @@ function App() {
     { name: 'Zjeść śniadanie', color: 'red' },
     { name: 'Zrobić obiad', color: 'blue' },
     { name: 'Pójść na trening', color: 'green' },
+    { name: 'Posprzątać', color: 'gray' },
   ];
 
   const [squareTasks, setSquareTasks] = useState([]);
 
   const handleDrop = (task) => {
-    // Aktualizuj stan kwadratu tylko wtedy, gdy zadanie jest przenoszone z obszaru zadań
+    
     if (!squareTasks.includes(task)) {
       setSquareTasks((prevTasks) => [...prevTasks, task]);
     }
