@@ -1,23 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import Square from './components/Square/Square';
+import React, { useState } from 'react';
+import Tasks from './components/Tasks/Tasks';
 
 function App() {
+
+  const tasks = [
+    { name: 'Zjeść śniadanie', color: 'red' },
+    { name: 'Zrobić obiad', color: 'blue' },
+    { name: 'Pójść na trening', color: 'green' },
+  ];
+
+  const [squareTasks, setSquareTasks] = useState([]);
+
+  const handleDrop = (task) => {
+    // Aktualizuj stan kwadratu tylko wtedy, gdy zadanie jest przenoszone z obszaru zadań
+    if (!squareTasks.includes(task)) {
+      setSquareTasks((prevTasks) => [...prevTasks, task]);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+       <DndProvider backend={HTML5Backend}>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Square tasks={squareTasks} onDrop={handleDrop} />
+      </div>
+      <div>Twoje zadania:</div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {tasks.map((task, index) => (
+          <Tasks key={index} task={task} />
+        ))}
+      </div>
+    </DndProvider>
     </div>
   );
 }
